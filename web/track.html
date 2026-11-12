@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tracker · ECE 198</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="rail" aria-hidden="true"></div>
+  <div class="dots" aria-hidden="true"></div>
+
+  <main class="page">
+    <header class="nav">
+      <a class="brand" href="index.html">ECE 198</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a class="active" href="track.html">Workout</a>
+      </nav>
+    </header>
+
+    <header class="top">
+      <div>
+        <p class="kicker">Workout</p>
+        <h1>Curl<br>form</h1>
+      </div>
+      <div class="actions">
+        <div class="status" id="status">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">Not connected</span>
+        </div>
+        <button type="button" class="ghost" id="previewBtn">Preview</button>
+        <button type="button" class="solid" id="connectBtn">Connect board</button>
+      </div>
+    </header>
+
+    <p class="banner" id="banner" hidden></p>
+
+    <section class="stage">
+      <div class="panel figure-panel">
+        <div class="panel-head">
+          <h2>Arm</h2>
+          <p id="phaseValue">Waiting for a curl</p>
+        </div>
+
+        <div class="figure-wrap">
+          <svg class="athlete" viewBox="0 0 440 520" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="168" cy="74" r="30"/>
+              <path d="M190 66c10 4 14 14 12 24"/>
+              <path d="M168 104v22"/>
+              <path d="M150 140c-8 80-4 150 6 210"/>
+              <path d="M188 136c10 70 6 140-2 214"/>
+              <path d="M156 348c-6 40-14 80-8 120"/>
+              <path d="M184 348c8 44 6 86 16 120"/>
+              <path d="M196 156c18 40 28 84 34 134"/>
+            </g>
+            <g id="forearm">
+              <path d="M230 290c4 48 6 96 4 142" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="234" cy="438" r="6.5"/>
+              <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                <path d="M208 438h52"/>
+                <path d="M208 424v28"/>
+                <path d="M260 424v28"/>
+              </g>
+            </g>
+            <circle class="joint" cx="230" cy="290" r="5"/>
+          </svg>
+
+          <div class="meter" aria-hidden="true">
+            <div class="meter-track">
+              <span class="tick" style="bottom: 70%"></span>
+              <span class="tick soft" style="bottom: 30%"></span>
+              <div class="meter-fill" id="romFill"></div>
+            </div>
+            <div class="meter-labels">
+              <span>Top</span>
+              <span>Bottom</span>
+            </div>
+          </div>
+        </div>
+
+        <dl class="readout">
+          <div>
+            <dt>Accelerometer</dt>
+            <dd id="accelValue">—</dd>
+          </div>
+          <div>
+            <dt>Curl range</dt>
+            <dd id="romValue">—</dd>
+          </div>
+          <div>
+            <dt>Signal</dt>
+            <dd id="signalValue">No live stream</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="panel verdict" id="verdict" data-result="idle">
+        <p class="kicker" id="deviceLine">ESP32_BLE</p>
+        <h2 id="verdictTitle">Ready</h2>
+        <p class="detail" id="verdictDetail">Connect the board, then curl. A rep counts only if the arm reaches the top, and form is scored from how long that curl takes.</p>
+        <div class="rep-block">
+          <p class="rep-count" id="repCount">0</p>
+          <p class="rep-caption">reps this session</p>
+        </div>
+        <p class="tempo" id="repTime">Target tempo is 3 seconds, give or take 1.</p>
+      </div>
+    </section>
+
+    <section class="checks">
+      <article class="check" id="rangeCheck">
+        <p class="kicker">Accelerometer</p>
+        <h3>Range</h3>
+        <p id="rangeState">Did the curl reach the top of the movement.</p>
+      </article>
+      <article class="check" id="tempoCheck">
+        <p class="kicker">Accelerometer</p>
+        <h3>Tempo</h3>
+        <p id="tempoState">Good form is a full curl between 2 and 4 seconds. Faster is too quick. Slower risks losing tension.</p>
+      </article>
+      <article class="check waiting" id="distanceCheck">
+        <p class="kicker">Next sensor</p>
+        <h3>Distance</h3>
+        <p id="distanceState">The ultrasonic check is not on this board yet. When the HC-SR04 code is added, start and end distance will show here.</p>
+      </article>
+    </section>
+
+    <section class="bottom">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Session</h2>
+        </div>
+        <div class="stats">
+          <div>
+            <p class="stat good" id="countGood">0</p>
+            <p>Good</p>
+          </div>
+          <div>
+            <p class="stat fast" id="countFast">0</p>
+            <p>Too fast</p>
+          </div>
+          <div>
+            <p class="stat slow" id="countSlow">0</p>
+            <p>Too slow</p>
+          </div>
+          <div>
+            <p class="stat" id="countTotal">0</p>
+            <p>Total</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Recent curls</h2>
+        </div>
+        <ol class="history" id="history">
+          <li class="empty">Completed curls will list here, newest first.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <p>Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

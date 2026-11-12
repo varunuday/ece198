@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Features · ECE 198</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="rail" aria-hidden="true"></div>
+  <div class="dots" aria-hidden="true"></div>
+
+  <main class="page">
+    <header class="nav">
+      <a class="brand" href="index.html">ECE 198</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a class="active" href="features.html">Features</a>
+        <a href="track.html">Workout</a>
+      </nav>
+    </header>
+
+    <header class="page-intro">
+      <p class="kicker">Features</p>
+      <h1>Every stat<br>in one list.</h1>
+      <p class="lede">Open a row to see the stat. Live ones are on the site now. The rest are ready for the next sensor, and the last row is an empty slot.</p>
+    </header>
+
+    <div class="accordion">
+      <details class="feature" open>
+        <summary>
+          <span class="sum-title">Today</span>
+          <span class="pill live">Live</span>
+        </summary>
+        <div class="fold"><div>
+          <p>The home board. Rings for the day, then heart rate, steps, active minutes, calories, and the current workout.</p>
+          <a class="solid" href="index.html">Open the board</a>
+        </div></div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="sum-title">Heart rate</span>
+          <span class="pill soon">Planned</span>
+        </summary>
+        <div class="fold"><div>
+          <p>Beats per minute on the watch face and on the day board. The number on the home page is a preview until a pulse sensor is on the board.</p>
+        </div></div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="sum-title">Steps</span>
+          <span class="pill soon">Planned</span>
+        </summary>
+        <div class="fold"><div>
+          <p>Steps since midnight, from a wrist or ankle accelerometer. The card is on the board and waiting for that count.</p>
+        </div></div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="sum-title">Active minutes</span>
+          <span class="pill soon">Planned</span>
+        </summary>
+        <div class="fold"><div>
+          <p>Minutes of movement, plus the calorie estimate that sits next to them. Both cards are on Today.</p>
+        </div></div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="sum-title">Workouts</span>
+          <span class="pill live">Live</span>
+        </summary>
+        <div class="fold"><div>
+          <p>A workout is its own session. Curl form is the first one: the arm sensor counts reps and scores the tempo. The next workout gets its own row and its own page.</p>
+          <a class="solid" href="track.html">Start curl form</a>
+        </div></div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="sum-title">Distance</span>
+          <span class="pill soon">Planned</span>
+        </summary>
+        <div class="fold"><div>
+          <p>How far the body or the weight travels, from an ultrasonic sensor. The card is already on Today. It stays blank until that code is flashed.</p>
+        </div></div>
+      </details>
+
+      <details class="feature">
+        <summary>
+          <span class="sum-title">Sleep</span>
+          <span class="pill soon">Planned</span>
+        </summary>
+        <div class="fold"><div>
+          <p>Hours down and how still the wrist was. Not on the board yet. Add the card when the sensor exists.</p>
+        </div></div>
+      </details>
+
+      <details class="feature add">
+        <summary>
+          <span class="sum-title">New stat</span>
+          <span class="pill">Open slot</span>
+        </summary>
+        <div class="fold"><div>
+          <p>Empty on purpose. Copy this block in <code>features.html</code>, name the stat, and mark it Live or Planned. If it has a page, add a link. Then add a card for it on the home board.</p>
+        </div></div>
+      </details>
+    </div>
+
+    <footer>
+      <p>Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari</p>
+    </footer>
+  </main>
+</body>
+</html>

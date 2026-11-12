@@ -10,9 +10,14 @@
 #define SERVICE_UUID         "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define REPS_CHAR_UUID       "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 #define RESULT_CHAR_UUID     "beb5483e-36e1-4688-b7f5-ea07361b26a9"
+// live arm position for the website: "fraction,accel,phase,lastRepMs"
+#define LIVE_CHAR_UUID       "beb5483e-36e1-4688-b7f5-ea07361b26aa"
 
 BLECharacteristic *pRepsCharacteristic;
 BLECharacteristic *pResultCharacteristic;
+BLECharacteristic *pLiveCharacteristic;
+unsigned long lastLiveMs = 0;
+unsigned long lastRepMs = 0;
 
 // restarts advertising after a phone disconnects so you can reconnect
 class ServerCallbacks : public BLEServerCallbacks {
@@ -125,8 +130,17 @@ void setup() {
   pResultCharacteristic->addDescriptor(new BLE2902());
   pResultCharacteristic->setValue("-");
 
+  pLiveCharacteristic = pService->createCharacteristic(
+    LIVE_CHAR_UUID,
+    BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
+  );
+  pLiveCharacteristic->addDescriptor(new BLE2902());
+  pLiveCharacteristic->setValue("0,0,0,0");
+
   pService->start();
-  BLEDevice::getAdvertising()->start();
+  BLEAdvertising *advertising = BLEDevice::getAdvertising();
+  advertising->addServiceUUID(SERVICE_UUID);
+  advertising->start();
   Serial.println("ESP32 BLE is ready!");
 
   showScreen(0, "");
@@ -184,11 +198,29 @@ void loop() {
         Serial.print(" s - ");
         Serial.println(result);
 
+        lastRepMs = repTime;
         showScreen(reps, result);
         sendBLE(reps, result);
       }
     }
   }
 
+  int phase = 0;  // 0 rest, 1 lifting, 2 at the top, 3 lowering
+  if (inRep && reachedTop && fraction <= HIGH_FRAC) phase = 3;
+  else if (inRep && fraction > HIGH_FRAC) phase = 2;
+  else if (inRep) phase = 1;
+
+  sendLive(fraction, accelX_smoothed, phase);
   delay(20);
+}
+
+// about 10 Hz so the website can draw the curl without flooding BLE
+void sendLive(float fraction, float accel, int phase) {
+  if (millis() - lastLiveMs < 100) return;
+  lastLiveMs = millis();
+
+  char buf[48];
+  snprintf(buf, sizeof(buf), "%.3f,%.2f,%d,%lu", fraction, accel, phase, lastRepMs);
+  pLiveCharacteristic->setValue(buf);
+  pLiveCharacteristic->notify();
 }

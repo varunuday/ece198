@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ECE 198 · Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="rail" aria-hidden="true"></div>
+  <div class="dots" aria-hidden="true"></div>
+
+  <main class="page">
+    <header class="nav">
+      <a class="brand" href="index.html">ECE 198</a>
+      <nav class="nav-links">
+        <a class="active" href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="track.html">Workout</a>
+      </nav>
+    </header>
+
+    <section class="board">
+      <div>
+        <p class="kicker rise">Smartwatch · fitness</p>
+        <h1>
+          <span class="line"><span>Your day,</span></span>
+          <span class="line"><span>on the</span></span>
+          <span class="line"><span>wrist.</span></span>
+        </h1>
+        <p class="lede rise">
+          One place for the wearable. Heart rate, steps, minutes, and workouts show up as stats.
+          Curl form is the first workout actually talking to the board.
+        </p>
+        <div class="hero-actions rise">
+          <a class="solid" href="track.html">Start a workout</a>
+          <a class="ghost" href="features.html">All stats</a>
+        </div>
+      </div>
+
+      <div class="watch-wrap">
+        <div class="watch">
+          <svg viewBox="0 0 220 220" aria-hidden="true">
+            <circle class="ring-track" cx="110" cy="110" r="96"/>
+            <circle class="ring-track" cx="110" cy="110" r="78"/>
+            <circle class="ring-track" cx="110" cy="110" r="60"/>
+            <circle class="ring ring-a" cx="110" cy="110" r="96"/>
+            <circle class="ring ring-b" cx="110" cy="110" r="78"/>
+            <circle class="ring ring-c" cx="110" cy="110" r="60"/>
+          </svg>
+          <div class="watch-face">
+            <p class="kicker" id="watchClock">--:--</p>
+            <p class="watch-bpm" id="watchBpm">76</p>
+            <p>bpm</p>
+          </div>
+        </div>
+        <svg class="pulse" viewBox="0 0 640 72" aria-hidden="true">
+          <polyline points="0,40 70,40 96,40 112,14 128,62 144,26 160,40 250,40 286,40 302,12 318,64 334,40 470,40 500,40 516,16 532,60 548,40 640,40"/>
+        </svg>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Heart rate</span><span>Steps</span><span>Calories</span><span>Workouts</span><span>Form</span><span>Distance</span><span>Sleep</span>
+        <span>Heart rate</span><span>Steps</span><span>Calories</span><span>Workouts</span><span>Form</span><span>Distance</span><span>Sleep</span>
+      </div>
+    </div>
+
+    <section class="day">
+      <div class="panel-head">
+        <h2>Today</h2>
+        <p>Sample day. Curl form is the live workout.</p>
+      </div>
+      <div class="stat-grid">
+        <article class="stat-card">
+          <p class="kicker">Heart rate</p>
+          <strong id="bpmStat">76</strong>
+          <p>bpm · resting band</p>
+        </article>
+        <article class="stat-card">
+          <p class="kicker">Steps</p>
+          <strong><span data-count="8426">0</span></strong>
+          <p>since midnight</p>
+        </article>
+        <article class="stat-card">
+          <p class="kicker">Active</p>
+          <strong><span data-count="38">0</span></strong>
+          <p>minutes moving</p>
+        </article>
+        <article class="stat-card">
+          <p class="kicker">Calories</p>
+          <strong><span data-count="312">0</span></strong>
+          <p>active burn</p>
+        </article>
+        <a class="stat-card live-card" href="track.html">
+          <p class="kicker">Workout · live</p>
+          <strong>Curl</strong>
+          <p>Form check from the board</p>
+        </a>
+        <article class="stat-card waiting">
+          <p class="kicker">Distance</p>
+          <strong>—</strong>
+          <p>Waiting on the next sensor</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="points">
+      <article>
+        <p class="num">01</p>
+        <h2>Wear it</h2>
+        <p>The board is the watch. Sensors on the body read the session and send it here.</p>
+      </article>
+      <article>
+        <p class="num">02</p>
+        <h2>Read the day</h2>
+        <p>Heart rate, steps, minutes, and workouts sit on one board instead of one exercise at a time.</p>
+      </article>
+      <article>
+        <p class="num">03</p>
+        <h2>Add a stat</h2>
+        <p>Each new sensor gets a card here and a row under Features. Curl form is only the first.</p>
+      </article>
+    </section>
+
+    <footer>
+      <p>Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari</p>
+    </footer>
+  </main>
+
+  <script src="home.js"></script>
+</body>
+</html>
