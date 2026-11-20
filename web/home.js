@@ -1,7 +1,5 @@
-const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Live clock on the watch face (the only real-time thing on the home page).
 const clock = document.getElementById("watchClock");
-const bpmWatch = document.getElementById("watchBpm");
-const bpmStat = document.getElementById("bpmStat");
 
 function paintClock() {
   if (!clock) return;
@@ -12,30 +10,26 @@ function paintClock() {
 paintClock();
 setInterval(paintClock, 1000);
 
-if (!reduce) {
-  const nodes = document.querySelectorAll("[data-count]");
-  const start = performance.now();
-  const count = (now) => {
-    const t = Math.min(1, (now - start) / 1200);
-    const e = 1 - Math.pow(1 - t, 3);
-    nodes.forEach((node) => {
-      node.textContent = Math.round(Number(node.dataset.count) * e).toLocaleString();
-    });
-    if (t < 1) requestAnimationFrame(count);
-  };
-  requestAnimationFrame(count);
+// Fills the "Your training" row when somebody is signed in.
+(function renderAccount() {
+  const paint = () => {
+    const section = document.getElementById("yourSection");
+    if (!section || !window.Auth) return;
+    const user = Auth.user();
+    if (!user) return;
 
-  let bpm = 76;
-  const beat = () => {
-    bpm += Math.round((Math.random() - 0.45) * 4);
-    bpm = Math.max(68, Math.min(92, bpm));
-    if (bpmWatch) bpmWatch.textContent = String(bpm);
-    if (bpmStat) bpmStat.textContent = String(bpm);
-    setTimeout(beat, 900 + Math.random() * 700);
+    const s = Auth.stats();
+    section.hidden = false;
+    document.getElementById("yourSessions").textContent = String(s.sessions);
+    document.getElementById("yourReps").textContent = s.reps.toLocaleString();
+    const scored = s.good + s.fast + s.slow;
+    document.getElementById("yourGood").textContent = scored
+      ? Math.round((100 * s.good) / scored) + "%"
+      : "—";
+    document.getElementById("yourSub").textContent = Auth.token()
+      ? user + " · synced to your account"
+      : user + " · saved on this browser";
   };
-  setTimeout(beat, 1400);
-} else {
-  document.querySelectorAll("[data-count]").forEach((node) => {
-    node.textContent = Number(node.dataset.count).toLocaleString();
-  });
-}
+  paint();
+  if (window.Auth && Auth.ready) Auth.ready.then(paint);
+})();

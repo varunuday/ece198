@@ -20,24 +20,25 @@
         <a class="active" href="index.html">Home</a>
         <a href="features.html">Features</a>
         <a href="track.html">Workout</a>
+        <a href="account.html" id="accountLink">Sign in</a>
       </nav>
     </header>
 
     <section class="board">
       <div>
-        <p class="kicker rise">Smartwatch · fitness</p>
+        <p class="kicker rise">ESP32 · form tracker</p>
         <h1>
-          <span class="line"><span>Your day,</span></span>
-          <span class="line"><span>on the</span></span>
-          <span class="line"><span>wrist.</span></span>
+          <span class="line"><span>Count the</span></span>
+          <span class="line"><span>rep. Score</span></span>
+          <span class="line"><span>the form.</span></span>
         </h1>
         <p class="lede rise">
-          One place for the wearable. Heart rate, steps, minutes, and workouts show up as stats.
-          Curl form is the first workout actually talking to the board.
+          An ESP32 on your arm counts reps for six exercises and grades each one on tempo:
+          good, too fast, or too slow. Sign in and every set saves to your account.
         </p>
         <div class="hero-actions rise">
           <a class="solid" href="track.html">Start a workout</a>
-          <a class="ghost" href="features.html">All stats</a>
+          <a class="ghost" href="account.html">Sign in</a>
         </div>
       </div>
 
@@ -53,8 +54,8 @@
           </svg>
           <div class="watch-face">
             <p class="kicker" id="watchClock">--:--</p>
-            <p class="watch-bpm" id="watchBpm">76</p>
-            <p>bpm</p>
+            <p class="watch-big">6</p>
+            <p>exercises</p>
           </div>
         </div>
         <svg class="pulse" viewBox="0 0 640 72" aria-hidden="true">
@@ -65,65 +66,89 @@
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Heart rate</span><span>Steps</span><span>Calories</span><span>Workouts</span><span>Form</span><span>Distance</span><span>Sleep</span>
-        <span>Heart rate</span><span>Steps</span><span>Calories</span><span>Workouts</span><span>Form</span><span>Distance</span><span>Sleep</span>
+        <span>Bicep curl</span><span>Overhead extension</span><span>Lateral raise</span><span>Tricep pushdown</span><span>Pec deck</span><span>Shoulder press</span>
+        <span>Bicep curl</span><span>Overhead extension</span><span>Lateral raise</span><span>Tricep pushdown</span><span>Pec deck</span><span>Shoulder press</span>
       </div>
     </div>
 
     <section class="day">
       <div class="panel-head">
-        <h2>Today</h2>
-        <p>Sample day. Curl form is the live workout.</p>
+        <h2>The exercises</h2>
+        <p>Pick one on the workout page — the board follows.</p>
+      </div>
+      <div class="stat-grid">
+        <a class="stat-card live-card" href="track.html#ex=0">
+          <p class="kicker">Live</p>
+          <strong>Bicep<br>curl</strong>
+          <p>Counts reps, scores tempo</p>
+        </a>
+        <a class="stat-card live-card" href="track.html#ex=2">
+          <p class="kicker">Live</p>
+          <strong>Overhead<br>extension</strong>
+          <p>Counts reps, scores tempo</p>
+        </a>
+        <a class="stat-card live-card" href="track.html#ex=3">
+          <p class="kicker">Live</p>
+          <strong>Lateral<br>raise</strong>
+          <p>Counts reps, scores tempo</p>
+        </a>
+        <a class="stat-card live-card" href="track.html#ex=5">
+          <p class="kicker">Live</p>
+          <strong>Tricep<br>pushdown</strong>
+          <p>Counts reps, scores tempo</p>
+        </a>
+        <a class="stat-card" href="track.html#ex=1">
+          <p class="kicker">Needs calibration</p>
+          <strong>Pec<br>deck</strong>
+          <p>Calibrate on the board to count</p>
+        </a>
+        <a class="stat-card" href="track.html#ex=4">
+          <p class="kicker">Needs calibration</p>
+          <strong>Shoulder<br>press</strong>
+          <p>Calibrate on the board to count</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="day" id="yourSection" hidden>
+      <div class="panel-head">
+        <h2>Your training</h2>
+        <p id="yourSub">Saved sessions on this account.</p>
       </div>
       <div class="stat-grid">
         <article class="stat-card">
-          <p class="kicker">Heart rate</p>
-          <strong id="bpmStat">76</strong>
-          <p>bpm · resting band</p>
+          <p class="kicker">Sessions</p>
+          <strong id="yourSessions">0</strong>
+          <p>saved workouts</p>
         </article>
         <article class="stat-card">
-          <p class="kicker">Steps</p>
-          <strong><span data-count="8426">0</span></strong>
-          <p>since midnight</p>
+          <p class="kicker">Reps</p>
+          <strong id="yourReps">0</strong>
+          <p>all time</p>
         </article>
-        <article class="stat-card">
-          <p class="kicker">Active</p>
-          <strong><span data-count="38">0</span></strong>
-          <p>minutes moving</p>
-        </article>
-        <article class="stat-card">
-          <p class="kicker">Calories</p>
-          <strong><span data-count="312">0</span></strong>
-          <p>active burn</p>
-        </article>
-        <a class="stat-card live-card" href="track.html">
-          <p class="kicker">Workout · live</p>
-          <strong>Curl</strong>
-          <p>Form check from the board</p>
+        <a class="stat-card live-card" href="account.html">
+          <p class="kicker">Good form</p>
+          <strong id="yourGood">—</strong>
+          <p>of scored reps · open history</p>
         </a>
-        <article class="stat-card waiting">
-          <p class="kicker">Distance</p>
-          <strong>—</strong>
-          <p>Waiting on the next sensor</p>
-        </article>
       </div>
     </section>
 
     <section class="points">
       <article>
         <p class="num">01</p>
-        <h2>Wear it</h2>
-        <p>The board is the watch. Sensors on the body read the session and send it here.</p>
+        <h2>Strap on the board</h2>
+        <p>The ESP32 and its accelerometer read the arm as you lift. Pick the exercise on the board or on the site — they stay in sync over Bluetooth.</p>
       </article>
       <article>
         <p class="num">02</p>
-        <h2>Read the day</h2>
-        <p>Heart rate, steps, minutes, and workouts sit on one board instead of one exercise at a time.</p>
+        <h2>Lift and get scored</h2>
+        <p>A rep counts only when you reach the top of the movement. Each rep is graded on tempo: good, too fast, or too slow.</p>
       </article>
       <article>
         <p class="num">03</p>
-        <h2>Add a stat</h2>
-        <p>Each new sensor gets a card here and a row under Features. Curl form is only the first.</p>
+        <h2>Save it to your name</h2>
+        <p>Sign in and every set saves to your account — reps, the good / fast / slow breakdown, and rep-by-rep history. It follows you across devices.</p>
       </article>
     </section>
 
@@ -132,6 +157,7 @@
     </footer>
   </main>
 
+  <script src="auth.js"></script>
   <script src="home.js"></script>
 </body>
 </html>

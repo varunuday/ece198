@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Account · ECE 198</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="rail" aria-hidden="true"></div>
+  <div class="dots" aria-hidden="true"></div>
+
+  <main class="page">
+    <header class="nav">
+      <a class="brand" href="index.html">ECE 198</a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="track.html">Workout</a>
+        <a class="active" href="account.html" id="accountLink">Account</a>
+      </nav>
+    </header>
+
+    <section id="authView">
+      <header class="page-intro">
+        <p class="kicker">Account</p>
+        <h1>Sign in,<br>lift.</h1>
+        <p class="lede">Sessions save to your name: exercise, reps, tempo verdicts, and rep-by-rep history for all six movements. On the deployed site your account syncs across devices; running locally, it saves in this browser.</p>
+      </header>
+
+      <div class="auth-grid">
+        <form class="panel auth-panel" id="loginForm">
+          <h2>Sign in</h2>
+          <label class="field">
+            <span>Username</span>
+            <input id="loginUser" autocomplete="username" required>
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input id="loginPass" type="password" autocomplete="current-password" required>
+          </label>
+          <p class="form-note" id="loginMsg"></p>
+          <button class="solid" type="submit">Sign in</button>
+        </form>
+
+        <form class="panel auth-panel" id="registerForm">
+          <h2>Create account</h2>
+          <label class="field">
+            <span>Username</span>
+            <input id="registerUser" autocomplete="username" required>
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input id="registerPass" type="password" autocomplete="new-password" required>
+          </label>
+          <label class="field">
+            <span>Password again</span>
+            <input id="registerPass2" type="password" autocomplete="new-password" required>
+          </label>
+          <p class="form-note" id="registerMsg">3–16 letters or numbers. Password at least 4 characters.</p>
+          <button class="ghost" type="submit">Create account</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="profileView" hidden>
+      <header class="top">
+        <div>
+          <p class="kicker">Account</p>
+          <h1 id="profileName">Name</h1>
+        </div>
+        <div class="actions">
+          <button type="button" class="ghost" id="logoutBtn">Sign out</button>
+        </div>
+      </header>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>All time</h2>
+          <p>Saved on this browser</p>
+        </div>
+        <div class="stats three">
+          <div>
+            <p class="stat" id="statSessions">0</p>
+            <p>Sessions</p>
+          </div>
+          <div>
+            <p class="stat" id="statReps">0</p>
+            <p>Reps</p>
+          </div>
+          <div>
+            <p class="stat good" id="statGood">—</p>
+            <p>Good form</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel sessions-panel">
+        <div class="panel-head">
+          <h2>Saved sessions</h2>
+          <p>Newest first</p>
+        </div>
+        <ol class="history sessions" id="sessionList">
+          <li class="empty">No saved sessions yet.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <p>Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari</p>
+    </footer>
+  </main>
+
+  <script src="auth.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>

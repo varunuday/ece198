@@ -749,7 +749,7 @@ code {
 
 .watch-face p { margin: 0; color: var(--muted); }
 
-.watch-bpm {
+.watch-big {
   color: var(--ink);
   font-size: 76px;
   font-weight: 400;
@@ -797,4 +797,171 @@ code {
   .board, .stat-grid { display: block; }
   .watch-wrap { margin: 28px auto 0; }
   .stat-card { margin-bottom: 12px; }
+}
+
+/* ---------- exercise picker ---------- */
+
+.exbar { margin-bottom: 18px; }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chip:hover { transform: translateY(-1px); }
+
+.chip.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cal-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--coral);
+  display: inline-block;
+}
+
+.exnote {
+  margin: 10px 2px 0;
+  color: var(--muted);
+  max-width: 72ch;
+}
+
+/* ---------- account forms ---------- */
+
+.auth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.auth-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-panel h2 { margin-bottom: 2px; }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field input {
+  font: inherit;
+  font-size: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+}
+
+.field input:focus {
+  outline: 2px solid var(--coral);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.form-note {
+  margin: 0;
+  min-height: 1.2em;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.form-note.error { color: var(--fast); }
+.form-note.ok { color: var(--good); }
+
+.auth-panel button { align-self: flex-start; }
+
+/* ---------- saved sessions ---------- */
+
+.stats.three { grid-template-columns: repeat(3, 1fr); }
+
+.sessions-panel { margin-top: 16px; }
+
+.sessions li { grid-template-columns: 1fr auto; }
+
+.sess-main strong {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.sess-meta {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+button.small {
+  padding: 8px 14px;
+  font-size: 11px;
+}
+
+/* ---------- exercise list (features page) ---------- */
+
+.exlist {
+  list-style: none;
+  margin: 0 24px 18px;
+  padding: 0;
+}
+
+.exlist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.exlist li:first-child { border-top: 0; }
+
+.exlist a {
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.exlist a:hover { text-decoration: underline; }
+
+.exlist .pill { margin-left: auto; }
+
+@media (max-width: 900px) {
+  .auth-grid { display: block; }
+  .auth-panel { margin-bottom: 12px; }
 }

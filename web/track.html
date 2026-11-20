@@ -20,19 +20,22 @@
         <a href="index.html">Home</a>
         <a href="features.html">Features</a>
         <a class="active" href="track.html">Workout</a>
+        <a href="account.html" id="accountLink">Sign in</a>
       </nav>
     </header>
 
     <header class="top">
       <div>
         <p class="kicker">Workout</p>
-        <h1>Curl<br>form</h1>
+        <h1 id="exerciseTitle">Bicep<br>curl</h1>
       </div>
       <div class="actions">
         <div class="status" id="status">
           <span class="dot" id="statusDot"></span>
           <span id="statusText">Not connected</span>
         </div>
+        <button type="button" class="ghost" id="saveBtn">Save session</button>
+        <button type="button" class="ghost" id="calibrateBtn" hidden>Calibrate</button>
         <button type="button" class="ghost" id="previewBtn">Preview</button>
         <button type="button" class="solid" id="connectBtn">Connect board</button>
       </div>
@@ -40,11 +43,16 @@
 
     <p class="banner" id="banner" hidden></p>
 
+    <section class="exbar">
+      <div class="chips" id="exerciseChips"></div>
+      <p class="exnote" id="exerciseNote"></p>
+    </section>
+
     <section class="stage">
       <div class="panel figure-panel">
         <div class="panel-head">
           <h2>Arm</h2>
-          <p id="phaseValue">Waiting for a curl</p>
+          <p id="phaseValue">Waiting for a rep</p>
         </div>
 
         <div class="figure-wrap">
@@ -116,17 +124,17 @@
       <article class="check" id="rangeCheck">
         <p class="kicker">Accelerometer</p>
         <h3>Range</h3>
-        <p id="rangeState">Did the curl reach the top of the movement.</p>
+        <p id="rangeState">Did the rep reach the top of the movement.</p>
       </article>
       <article class="check" id="tempoCheck">
         <p class="kicker">Accelerometer</p>
         <h3>Tempo</h3>
-        <p id="tempoState">Good form is a full curl between 2 and 4 seconds. Faster is too quick. Slower risks losing tension.</p>
+        <p id="tempoState">Good form is a full rep inside the tempo window. Faster is too quick. Slower risks losing tension.</p>
       </article>
-      <article class="check waiting" id="distanceCheck">
-        <p class="kicker">Next sensor</p>
-        <h3>Distance</h3>
-        <p id="distanceState">The ultrasonic check is not on this board yet. When the HC-SR04 code is added, start and end distance will show here.</p>
+      <article class="check" id="saveCheck">
+        <p class="kicker">Account</p>
+        <h3>Saving</h3>
+        <p id="saveState">Sign in to save this set. It saves on Save session, when you switch exercises, or when you leave the page.</p>
       </article>
     </section>
 
@@ -157,10 +165,10 @@
 
       <div class="panel">
         <div class="panel-head">
-          <h2>Recent curls</h2>
+          <h2>Recent reps</h2>
         </div>
         <ol class="history" id="history">
-          <li class="empty">Completed curls will list here, newest first.</li>
+          <li class="empty">Completed reps will list here, newest first.</li>
         </ol>
       </div>
     </section>
@@ -170,6 +178,7 @@
     </footer>
   </main>
 
+  <script src="auth.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

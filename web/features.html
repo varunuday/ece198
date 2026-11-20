@@ -20,95 +20,73 @@
         <a href="index.html">Home</a>
         <a class="active" href="features.html">Features</a>
         <a href="track.html">Workout</a>
+        <a href="account.html" id="accountLink">Sign in</a>
       </nav>
     </header>
 
     <header class="page-intro">
       <p class="kicker">Features</p>
-      <h1>Every stat<br>in one list.</h1>
-      <p class="lede">Open a row to see the stat. Live ones are on the site now. The rest are ready for the next sensor, and the last row is an empty slot.</p>
+      <h1>What the<br>site does.</h1>
+      <p class="lede">Everything here is built and working: six arm exercises scored by the board, and accounts that save your sessions. Open a row for the detail.</p>
     </header>
 
     <div class="accordion">
       <details class="feature" open>
         <summary>
-          <span class="sum-title">Today</span>
-          <span class="pill live">Live</span>
-        </summary>
-        <div class="fold"><div>
-          <p>The home board. Rings for the day, then heart rate, steps, active minutes, calories, and the current workout.</p>
-          <a class="solid" href="index.html">Open the board</a>
-        </div></div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="sum-title">Heart rate</span>
-          <span class="pill soon">Planned</span>
-        </summary>
-        <div class="fold"><div>
-          <p>Beats per minute on the watch face and on the day board. The number on the home page is a preview until a pulse sensor is on the board.</p>
-        </div></div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="sum-title">Steps</span>
-          <span class="pill soon">Planned</span>
-        </summary>
-        <div class="fold"><div>
-          <p>Steps since midnight, from a wrist or ankle accelerometer. The card is on the board and waiting for that count.</p>
-        </div></div>
-      </details>
-
-      <details class="feature">
-        <summary>
-          <span class="sum-title">Active minutes</span>
-          <span class="pill soon">Planned</span>
-        </summary>
-        <div class="fold"><div>
-          <p>Minutes of movement, plus the calorie estimate that sits next to them. Both cards are on Today.</p>
-        </div></div>
-      </details>
-
-      <details class="feature">
-        <summary>
           <span class="sum-title">Workouts</span>
           <span class="pill live">Live</span>
         </summary>
         <div class="fold"><div>
-          <p>A workout is its own session. Curl form is the first one: the arm sensor counts reps and scores the tempo. The next workout gets its own row and its own page.</p>
-          <a class="solid" href="track.html">Start curl form</a>
+          <p>Six arm exercises, one page. The ESP32's accelerometer counts a rep when you reach the top of the movement and scores each rep on tempo — good, too fast, or too slow. Pick a movement below or on the workout page; the board follows over Bluetooth either way. Two exercises ship uncalibrated because a forearm tilt sensor can't see them — calibrate them on the board to try.</p>
+          <ul class="exlist">
+            <li>
+              <a href="track.html#ex=0">Bicep curl</a>
+              <span class="pill live">Live</span>
+            </li>
+            <li>
+              <a href="track.html#ex=2">Overhead extension</a>
+              <span class="pill live">Live</span>
+            </li>
+            <li>
+              <a href="track.html#ex=3">Lateral raise</a>
+              <span class="pill live">Live</span>
+            </li>
+            <li>
+              <a href="track.html#ex=5">Tricep pushdown</a>
+              <span class="pill live">Live</span>
+            </li>
+            <li>
+              <a href="track.html#ex=1">Pec deck</a>
+              <span class="pill soon">Needs calibration</span>
+            </li>
+            <li>
+              <a href="track.html#ex=4">Shoulder press</a>
+              <span class="pill soon">Needs calibration</span>
+            </li>
+          </ul>
+          <a class="solid" href="track.html">Start a workout</a>
         </div></div>
       </details>
 
       <details class="feature">
         <summary>
-          <span class="sum-title">Distance</span>
-          <span class="pill soon">Planned</span>
+          <span class="sum-title">Accounts</span>
+          <span class="pill live">Live</span>
         </summary>
         <div class="fold"><div>
-          <p>How far the body or the weight travels, from an ultrasonic sensor. The card is already on Today. It stays blank until that code is flashed.</p>
+          <p>Create an account and sign in. Every session saves to your name: the exercise, rep count, the good / too fast / too slow breakdown, and rep-by-rep history. It saves when you press Save session, switch exercises, or leave the page. On the deployed site your data is stored server-side and follows you across devices.</p>
+          <a class="solid" href="account.html">Open account</a>
         </div></div>
       </details>
 
       <details class="feature">
         <summary>
-          <span class="sum-title">Sleep</span>
-          <span class="pill soon">Planned</span>
+          <span class="sum-title">Live preview</span>
+          <span class="pill live">Live</span>
         </summary>
         <div class="fold"><div>
-          <p>Hours down and how still the wrist was. Not on the board yet. Add the card when the sensor exists.</p>
-        </div></div>
-      </details>
-
-      <details class="feature add">
-        <summary>
-          <span class="sum-title">New stat</span>
-          <span class="pill">Open slot</span>
-        </summary>
-        <div class="fold"><div>
-          <p>Empty on purpose. Copy this block in <code>features.html</code>, name the stat, and mark it Live or Planned. If it has a page, add a link. Then add a card for it on the home board.</p>
+          <p>No board handy? The workout page has a Preview button that plays sample reps for the selected exercise — including the calibration flow for the two uncalibrated movements — so you can see the scoring and the arm animation without hardware.</p>
+          <a class="solid" href="track.html">Try the preview</a>
         </div></div>
       </details>
     </div>
@@ -117,5 +95,7 @@
       <p>Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari</p>
     </footer>
   </main>
+
+  <script src="auth.js"></script>
 </body>
 </html>
