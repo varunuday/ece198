@@ -115,10 +115,169 @@ const EXERCISES = [
 
 const ELBOW = { x: 230, y: 290 };
 
+// Per-exercise SVG figure definitions.
+// body: SVG path/circle markup for the static torso + arm context
+// pivot: the {x, y} point the forearm rotates around
+// forearmRest: SVG markup for the forearm at fraction=0 (start pose)
+// forearmEnd: conceptual end pose (the rotation takes it there via degrees)
+const FIGURES = [
+  // 0 — BICEP CURL: arm hanging at side, elbow near hip
+  {
+    pivot: { x: 230, y: 290 },
+    body: `
+      <circle cx="168" cy="74" r="30"/>
+      <path d="M190 66c10 4 14 14 12 24"/>
+      <path d="M168 104v22"/>
+      <path d="M150 140c-8 80-4 150 6 210"/>
+      <path d="M188 136c10 70 6 140-2 214"/>
+      <path d="M156 348c-6 40-14 80-8 120"/>
+      <path d="M184 348c8 44 6 86 16 120"/>
+      <path d="M196 156c18 40 28 84 34 134"/>`,
+    forearm: `
+      <path d="M230 290c4 48 6 96 4 142" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="234" cy="438" r="6.5"/>
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M210 438h48"/><path d="M210 424v28"/><path d="M258 424v28"/>
+      </g>`,
+  },
+  // 1 — PEC DECK: front-on body, arm extended out to side at chest level
+  {
+    pivot: { x: 196, y: 190 },
+    body: `
+      <circle cx="168" cy="74" r="30"/>
+      <path d="M190 66c10 4 14 14 12 24"/>
+      <path d="M168 104v22"/>
+      <path d="M148 136c-6 70-4 140 4 212"/>
+      <path d="M188 134c8 60 6 130 2 212"/>
+      <path d="M152 348c-6 44-10 84-6 120"/>
+      <path d="M186 348c6 48 8 88 14 120"/>
+      <path d="M188 140c8-4 36-2 56 4"/>`,
+    forearm: `
+      <path d="M196 190c40 6 82 10 128 8" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="330" cy="196" r="6.5"/>
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M330 174v46"/><path d="M318 174h24"/><path d="M318 220h24"/>
+      </g>`,
+  },
+  // 2 — OVERHEAD EXTENSION: arms raised, elbows pointing up behind head
+  {
+    pivot: { x: 220, y: 158 },
+    body: `
+      <circle cx="168" cy="74" r="30"/>
+      <path d="M190 66c10 4 14 14 12 24"/>
+      <path d="M168 104v22"/>
+      <path d="M148 136c-6 70-4 140 4 212"/>
+      <path d="M188 134c8 60 6 130 2 212"/>
+      <path d="M152 348c-6 44-10 84-6 120"/>
+      <path d="M186 348c6 48 8 88 14 120"/>
+      <path d="M196 150c8-30 22-50 24-70"/>`,
+    forearm: `
+      <path d="M220 158c4-44 8-88 6-130" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="224" cy="22" r="6.5"/>
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M202 22h46"/><path d="M202 10v24"/><path d="M248 10v24"/>
+      </g>`,
+  },
+  // 3 — LATERAL RAISE: arm at side, shoulder is the pivot (whole arm swings out)
+  {
+    pivot: { x: 196, y: 170 },
+    body: `
+      <circle cx="168" cy="74" r="30"/>
+      <path d="M190 66c10 4 14 14 12 24"/>
+      <path d="M168 104v22"/>
+      <path d="M148 136c-6 70-4 140 4 212"/>
+      <path d="M188 134c8 60 6 130 2 212"/>
+      <path d="M152 348c-6 44-10 84-6 120"/>
+      <path d="M186 348c6 48 8 88 14 120"/>`,
+    forearm: `
+      <path d="M196 170c10 44 14 90 12 140" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="206" cy="316" r="6.5"/>
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M184 316h46"/><path d="M184 302v28"/><path d="M230 302v28"/>
+      </g>`,
+  },
+  // 4 — SHOULDER PRESS: arms bent at shoulder height, forearm presses up
+  {
+    pivot: { x: 196, y: 190 },
+    body: `
+      <circle cx="168" cy="74" r="30"/>
+      <path d="M190 66c10 4 14 14 12 24"/>
+      <path d="M168 104v22"/>
+      <path d="M148 136c-6 70-4 140 4 212"/>
+      <path d="M188 134c8 60 6 130 2 212"/>
+      <path d="M152 348c-6 44-10 84-6 120"/>
+      <path d="M186 348c6 48 8 88 14 120"/>
+      <path d="M188 142c8-4 32-2 50 6 8 6 14 20 14 42"/>`,
+    forearm: `
+      <path d="M196 190c8-46 12-92 10-136" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="202" cy="48" r="6.5"/>
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M180 48h46"/><path d="M180 36v24"/><path d="M226 36v24"/>
+      </g>`,
+  },
+  // 5 — TRICEP PUSHDOWN: elbow pinned at chest level, forearm swings downward
+  {
+    pivot: { x: 230, y: 210 },
+    body: `
+      <circle cx="168" cy="74" r="30"/>
+      <path d="M190 66c10 4 14 14 12 24"/>
+      <path d="M168 104v22"/>
+      <path d="M150 140c-8 80-4 150 6 210"/>
+      <path d="M188 136c10 70 6 140-2 214"/>
+      <path d="M156 348c-6 40-14 80-8 120"/>
+      <path d="M184 348c8 44 6 86 16 120"/>
+      <path d="M196 156c14 20 24 36 34 54"/>`,
+    forearm: `
+      <path d="M230 210c-10 46-16 92-14 142" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="218" cy="358" r="6.5"/>
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+        <path d="M196 358h46"/><path d="M196 344v28"/><path d="M242 344v28"/>
+      </g>`,
+  },
+];
+
 let device = null;
 let exerciseChar = null;
 let previewFrame = 0;
 let sawLive = false;
+
+// --- smooth arm animation ---
+// BLE arrives at ~10 Hz. We lerp the drawn fraction at 60 fps so the arm
+// glides instead of jumping on each BLE packet.
+let _drawnFraction = 0;        // what is currently drawn on screen
+let _lerpRafId = 0;            // requestAnimationFrame handle
+
+function startLerpLoop() {
+  if (_lerpRafId) return;      // already running
+  function tick() {
+    const target = state.fraction;
+    const diff = target - _drawnFraction;
+    // fast-follow: 20% of remaining distance per frame → reaches ~95% in ~15 frames
+    if (Math.abs(diff) < 0.002) {
+      _drawnFraction = target;
+    } else {
+      _drawnFraction += diff * 0.22;
+    }
+    _applyForearmRotation(_drawnFraction);
+    _lerpRafId = requestAnimationFrame(tick);
+  }
+  _lerpRafId = requestAnimationFrame(tick);
+}
+
+function stopLerpLoop() {
+  if (_lerpRafId) { cancelAnimationFrame(_lerpRafId); _lerpRafId = 0; }
+}
+
+function _applyForearmRotation(frac) {
+  const calibrated = isCalibrated();
+  const drawn = clamp(calibrated ? frac : 0, 0, 1);
+  const fig = FIGURES[state.exercise] || FIGURES[0];
+  const { x, y } = fig.pivot;
+  const el = $("forearm");
+  if (el) el.setAttribute("transform", `rotate(${ex().degrees * drawn} ${x} ${y})`);
+  const fill = $("romFill");
+  if (fill) fill.style.height = (drawn * 100).toFixed(1) + "%";
+}
 
 const encoder = new TextEncoder();
 const $ = (id) => document.getElementById(id);
@@ -171,6 +330,8 @@ function resetCounters() {
   state.counts = { GOOD: 0, "TOO FAST": 0, "TOO SLOW": 0 };
   state.history = [];
   sawLive = false;
+  _drawnFraction = 0;
+  _lastFigureExercise = -1; // force figure redraw on next render
 }
 
 $("connectBtn").addEventListener("click", () => {
@@ -373,6 +534,7 @@ function onDisconnected() {
   state.multi = false;
   exerciseChar = null;
   state.deviceName = "";
+  stopLerpLoop();
   renderAll();
 }
 
@@ -511,8 +673,12 @@ function runPreviewLoop() {
     } else {
       const tri = t < 0.5 ? t * 2 : (1 - t) * 2;
       state.fraction = tri;
+      // preview is already at 60 fps — set drawn directly (no extra lerp needed)
+      _drawnFraction = tri;
       state.phase = t < 0.42 ? 1 : t < 0.58 ? 2 : 3;
       state.accel = sA + (eA - sA) * tri;
+      _applyForearmRotation(_drawnFraction);
+      renderFigure();
       renderLive();
     }
     previewFrame = requestAnimationFrame(frame);
@@ -523,6 +689,7 @@ function runPreviewLoop() {
 function stopPreview() {
   state.preview = false;
   cancelAnimationFrame(previewFrame);
+  stopLerpLoop();
   hideBanner();
   renderConnection();
 }
@@ -609,14 +776,41 @@ function renderChips() {
   }
 }
 
+let _lastFigureExercise = -1;
+
+function renderFigure() {
+  const idx = state.exercise;
+  if (idx === _lastFigureExercise) return;
+  _lastFigureExercise = idx;
+
+  const fig = FIGURES[idx] || FIGURES[0];
+
+  // body
+  const bodyEl = $("figureBody");
+  if (bodyEl) bodyEl.innerHTML = fig.body;
+
+  // forearm
+  const forearmEl = $("forearm");
+  if (forearmEl) {
+    forearmEl.innerHTML = fig.forearm;
+    forearmEl.setAttribute("transform", "");
+  }
+
+  // joint dot
+  const joint = $("jointDot");
+  if (joint) {
+    joint.setAttribute("cx", fig.pivot.x);
+    joint.setAttribute("cy", fig.pivot.y);
+  }
+}
+
 function renderLive() {
+  renderFigure();
+  startLerpLoop(); // ensure smooth animation loop is running
+
   const calibrated = isCalibrated();
-  const drawn = clamp(calibrated ? state.fraction : 0, 0, 1);
-  $("forearm").setAttribute(
-    "transform",
-    `rotate(${ex().degrees * drawn} ${ELBOW.x} ${ELBOW.y})`
-  );
-  $("romFill").style.height = (drawn * 100).toFixed(1) + "%";
+  // Use the lerped drawn fraction for the stats display
+  const drawn = clamp(calibrated ? _drawnFraction : 0, 0, 1);
 
   const range = $("rangeCheck");
   if (!calibrated) {

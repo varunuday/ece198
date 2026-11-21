@@ -56,27 +56,11 @@
         </div>
 
         <div class="figure-wrap">
-          <svg class="athlete" viewBox="0 0 440 520" aria-hidden="true">
-            <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="168" cy="74" r="30"/>
-              <path d="M190 66c10 4 14 14 12 24"/>
-              <path d="M168 104v22"/>
-              <path d="M150 140c-8 80-4 150 6 210"/>
-              <path d="M188 136c10 70 6 140-2 214"/>
-              <path d="M156 348c-6 40-14 80-8 120"/>
-              <path d="M184 348c8 44 6 86 16 120"/>
-              <path d="M196 156c18 40 28 84 34 134"/>
-            </g>
-            <g id="forearm">
-              <path d="M230 290c4 48 6 96 4 142" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
-              <circle cx="234" cy="438" r="6.5"/>
-              <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
-                <path d="M208 438h52"/>
-                <path d="M208 424v28"/>
-                <path d="M260 424v28"/>
-              </g>
-            </g>
-            <circle class="joint" cx="230" cy="290" r="5"/>
+          <svg class="athlete" id="athleteSvg" viewBox="0 0 440 520" aria-hidden="true">
+            <!-- body is injected by renderFigure() in app.js -->
+            <g id="figureBody" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="forearm"></g>
+            <circle class="joint" id="jointDot" cx="230" cy="290" r="5"/>
           </svg>
 
           <div class="meter" aria-hidden="true">

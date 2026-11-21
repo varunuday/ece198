@@ -183,6 +183,11 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 
 #forearm { color: var(--coral); }
 
+/* Body transitions between exercises */
+#figureBody {
+  transition: opacity 150ms ease;
+}
+
 .meter { height: 320px; display: flex; gap: 8px; }
 
 .meter-track {
