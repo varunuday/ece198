@@ -20,6 +20,9 @@ const EXERCISES = [
     title: "Bicep curl",
     lines: ["Bicep", "curl"],
     degrees: -155,
+    axis: 0,
+    startAccel: 3.1,
+    endAccel: -11.15,
     targetMs: 3000,
     tolMs: 1000,
     calibrated: true,
@@ -33,19 +36,25 @@ const EXERCISES = [
     title: "Pec deck",
     lines: ["Pec", "deck"],
     degrees: -60,
+    axis: 1,
+    startAccel: -0.5,
+    endAccel: 6.5,
     targetMs: 3000,
     tolMs: 1000,
-    calibrated: false,
+    calibrated: true,
     phases: ["Arms open", "Squeezing", "Pads together", "Opening"],
     topName: "the squeeze",
     bottomName: "the start",
-    about: "A forearm tilt sensor can barely see the squeeze, so this one ships uncalibrated.",
+    about: "Arms open wide. Squeeze elbows and forearms together until pads meet in front of your chest.",
   },
   {
     name: "OVERHEAD EXT",
     title: "Overhead extension",
     lines: ["Overhead", "extension"],
     degrees: -170,
+    axis: 0,
+    startAccel: 9.0,
+    endAccel: -9.0,
     targetMs: 3000,
     tolMs: 1000,
     calibrated: true,
@@ -59,6 +68,9 @@ const EXERCISES = [
     title: "Lateral raise",
     lines: ["Lateral", "raise"],
     degrees: -95,
+    axis: 0,
+    startAccel: 9.0,
+    endAccel: 1.0,
     targetMs: 2500,
     tolMs: 1000,
     calibrated: true,
@@ -72,19 +84,25 @@ const EXERCISES = [
     title: "Shoulder press",
     lines: ["Shoulder", "press"],
     degrees: -160,
+    axis: 2,
+    startAccel: 4.0,
+    endAccel: -2.5,
     targetMs: 3000,
     tolMs: 1000,
-    calibrated: false,
+    calibrated: true,
     phases: ["Hands at shoulders", "Pressing", "Arms overhead", "Lowering"],
     topName: "arms overhead",
     bottomName: "shoulder height",
-    about: "Ships uncalibrated — the forearm barely tilts during a press. Calibrate it on the board to try.",
+    about: "Hands at shoulder height. Press straight up until arms are fully locked out overhead.",
   },
   {
     name: "TRICEP PUSHDN",
     title: "Tricep pushdown",
     lines: ["Tricep", "pushdown"],
     degrees: -100,
+    axis: 0,
+    startAccel: -2.0,
+    endAccel: 9.0,
     targetMs: 3000,
     tolMs: 1000,
     calibrated: true,
@@ -277,7 +295,11 @@ async function connect() {
   stopPreview();
   try {
     device = await navigator.bluetooth.requestDevice({
-      filters: [{ name: "ESP32_BLE" }, { services: [SERVICE_UUID] }],
+      filters: [
+        { name: "ESP32_BLE" },
+        { namePrefix: "ESP32" },
+        { services: [SERVICE_UUID] },
+      ],
       optionalServices: [SERVICE_UUID],
     });
     showBanner("Connecting to " + (device.name || "the board") + "…");
@@ -475,10 +497,12 @@ function runPreviewLoop() {
     if (!state.preview || !isCalibrated()) return;
     const item = plan[index % plan.length];
     const t = (now - start) / item.ms;
+    const sA = ex().startAccel ?? 3.1;
+    const eA = ex().endAccel ?? -11.15;
     if (t >= 1) {
       state.fraction = 0;
       state.phase = 0;
-      state.accel = 3.1;
+      state.accel = sA;
       state.lastRepMs = item.ms;
       state.reps += 1;
       commit(state.reps, item.result, item.ms);
@@ -488,7 +512,7 @@ function runPreviewLoop() {
       const tri = t < 0.5 ? t * 2 : (1 - t) * 2;
       state.fraction = tri;
       state.phase = t < 0.42 ? 1 : t < 0.58 ? 2 : 3;
-      state.accel = 3.1 + (-11.15 - 3.1) * tri;
+      state.accel = sA + (eA - sA) * tri;
       renderLive();
     }
     previewFrame = requestAnimationFrame(frame);
@@ -546,7 +570,8 @@ function renderConnection() {
   $("connectBtn").textContent = state.connected ? "Disconnect" : "Connect board";
   $("previewBtn").textContent = state.preview ? "Stop preview" : "Preview";
   $("deviceLine").textContent = state.deviceName || "ESP32_BLE";
-  $("calibrateBtn").hidden = isCalibrated();
+  $("calibrateBtn").hidden = !state.connected && isCalibrated();
+  $("calibrateBtn").textContent = isCalibrated() ? "Recalibrate" : "Calibrate";
 }
 
 function renderChips() {

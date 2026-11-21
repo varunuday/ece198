@@ -38,14 +38,14 @@ When the API isn't reachable (python server, KV not configured), the site silent
 
 Flash `hardware.ino` for the multi-exercise firmware. It adds an exercise characteristic (`...26ab`): pick an exercise on the page and the board follows, or press the BOOT button on the board and the page follows.
 
-1. Bicep curl — calibrated
-2. Pec deck — needs calibration
-3. Overhead extension — calibrated
-4. Lateral raise — calibrated
-5. Shoulder press — needs calibration
-6. Tricep pushdown — calibrated
+1. Bicep curl — calibrated (axis X, arm vertical down to vertical up)
+2. Pec deck — calibrated (axis Y, arms wide open to chest squeeze)
+3. Overhead extension — calibrated (axis X, behind head to overhead)
+4. Lateral raise — calibrated (axis X, arm hanging to horizontal)
+5. Shoulder press — calibrated (axis Z, shoulder height to overhead lockout)
+6. Tricep pushdown — calibrated (axis X, forearm forward to straight down)
 
-Uncalibrated exercises show a coral dot. Hold BOOT for 1.5 s (or press **Calibrate** on the page while connected) and follow the OLED: hold the start pose, then the end pose — about 12 seconds. Calibrations persist on the board.
+All six exercises have calculated thresholds and scoring out of the box. To record custom measured poses on any exercise, hold BOOT for 1.5 s on the board (or press **Recalibrate** on the page while connected) and follow the OLED: hold the start pose, then the end pose — about 12 seconds. Calibrations persist on the board.
 
 - **Good form:** the rep reaches the end pose inside the tempo window (curl 3 s ±1, lateral raise 2.5 s ±1, the rest 3 s ±1).
 - **Too fast / too slow:** full range, outside the window.

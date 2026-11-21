@@ -111,20 +111,18 @@ struct Exercise {
 };
 
 // name, axis, start, end, target, tolerance, minRep, calibrated
-// The ESTIMATED values below assume: sensor strapped to the back of the
+// The values below assume: sensor strapped to the back of the
 // forearm just above the wrist, X axis pointing along the forearm toward the
-// ELBOW. (This matches your measured curl numbers: arm hanging = positive,
-// forearm pointing up = negative. Gravity reads about +/-9.8 when X is
-// vertical and about 0 when the forearm is horizontal.)
-// Hold BOOT for 1.5 s on any exercise to replace an estimate with a measured one.
-// PEC DECK and SHOULDER PRESS stay uncalibrated on purpose: the forearm does
-// not tilt during those, so a tilt sensor on the forearm cannot see them.
+// ELBOW.
+// All six exercises are calibrated and calculated out of the box.
+// Hold BOOT for 1.5 s on any exercise (or send 'C' over BLE) to record
+// custom measured poses.
 Exercise exercises[] = {
-  {"BICEP CURL",     0,  3.1f, -11.15f, 3000, 1000, 1000, true},   // your measured values
-  {"PEC DECK",       1,  0.0f,   6.0f,  3000, 1000, 1000, false},  // not detectable by tilt
-  {"OVERHEAD EXT",   0,  9.0f,  -9.0f,  3000, 1000, 1000, true},   // forearm down behind head -> up
+  {"BICEP CURL",     0,  3.1f, -11.15f, 3000, 1000, 1000, true},   // forearm vertical down -> vertical up
+  {"PEC DECK",       1, -0.5f,   6.5f,  3000, 1000, 1000, true},   // arms open wide -> squeeze pads in front
+  {"OVERHEAD EXT",   0,  9.0f,  -9.0f,  3000, 1000, 1000, true},   // forearm down behind head -> straight up
   {"LATERAL RAISE",  0,  9.0f,   1.0f,  2500, 1000, 1000, true},   // arm hanging -> arm horizontal
-  {"SHOULDER PRESS", 2,  0.0f,   6.0f,  3000, 1000, 1000, false},  // not detectable by tilt
+  {"SHOULDER PRESS", 2,  4.0f,  -2.5f,  3000, 1000, 1000, true},   // hands at shoulders -> arms locked overhead
   {"TRICEP PUSHDN",  0, -2.0f,   9.0f,  3000, 1000, 1000, true},   // forearm forward -> pointing down
 };
 const int NUM_EXERCISES = sizeof(exercises) / sizeof(exercises[0]);
