@@ -273,8 +273,12 @@ function _applyForearmRotation(frac) {
   const drawn = clamp(calibrated ? frac : 0, 0, 1);
   const fig = FIGURES[state.exercise] || FIGURES[0];
   const { x, y } = fig.pivot;
+  // Tricep pushdown (exercise 5): start is arms UP (bent at elbow), end is arms DOWN.
+  // Invert so fraction=0 → fully rotated (arms up) and fraction=1 → no rotation (arms down).
+  const isTricep = state.exercise === 5;
+  const rotFrac = isTricep ? (1 - drawn) : drawn;
   const el = $("forearm");
-  if (el) el.setAttribute("transform", `rotate(${ex().degrees * drawn} ${x} ${y})`);
+  if (el) el.setAttribute("transform", `rotate(${ex().degrees * rotFrac} ${x} ${y})`);
   const fill = $("romFill");
   if (fill) fill.style.height = (drawn * 100).toFixed(1) + "%";
 }
