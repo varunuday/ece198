@@ -1,18 +1,22 @@
-# Exerbox: Wearable Exercise Rep Counter & Form Tracker
+# ExerBox: Wearable Exercise Rep Counter & Form Tracker
 By Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari
 
 ## Overview
+
 We built a wrist watch with a live display that shows the number of completed reps and feedback on the user's form. This data is linked to a [website](https://ece198.vercel.app) via Bluetooth Low Energy (BLE), which stores the user's workout history.
 
 The project was designed for elderly patients enrolled in the University of Waterloo's Centre for Community, Clinical and Applied Research Excellence (CCCARE) who are working out under limited or no supervision. This device could allow CCCARE to provide more support to patients in large class sizes and expand their services to patients at home.
 
-Photos:
-Demo:
+![ExerBox](images/ExerBox.HEIC)
+![ExerBox with Website](<images/ExerBox with Website.HEIC>)
+[Youtube Demo Video](https://youtu.be/eJpfpgINAaE?si=ym_6DFrw67wo9XDW)
 
 ## System Logic
+
 ![System Logic](<images/System Logic.png>)
 
 ## Hardware
+
 Parts List:
 - ESP32 microcontroller
 - MMA7361 3-axis accelerometer
@@ -23,6 +27,7 @@ Parts List:
 ![Circuit Diagram](<images/Circuit diagram.png>)
 
 ## Firmware
+
 The firmware flashed to the ESP32 is in `hardware.ino`. The file `bicepCurl.ino` was the first draft of the firmware, which only worked for one exercise.
 
 - An Exponential Moving Average (EMA) filter smooths the accelerometer data
@@ -33,6 +38,7 @@ The firmware flashed to the ESP32 is in `hardware.ino`. The file `bicepCurl.ino`
 - Rep count and form feedback are displayed on the OLED, communicated via I2C protocol.
   
 ## Website
+
 The site is in `web/`.
 
 - `index.html` is the home page: what the site does, the six exercises, and your training totals once you sign in.
@@ -86,3 +92,35 @@ All six exercises have calculated thresholds and scoring out of the box. To reco
 The older `bluetoothAndRepCounter.ino` is curl-only. The site still works with it — the exercise picker locks to Bicep curl.
 
 The board advertises as `ESP32_BLE`.
+
+## Testing
+
+We ran 30 reps of each of three exercises -- bicep curl, tricep pushdown, and lateral raise -- before and after calibrating them to test for their percentage accuracy for form and rep count. We found the following results:
+
+### % Accuracy of Form Feedback After 30 Reps per Exercise
+
+| Exercise | % Accuracy of Form Feedback |
+| -------- | --------------------------- |
+| Bicep Curl (Before Calibration)   | 80%     |
+| Bicep Curl (After Calibration)   | 100%     |
+| Tricep Pushdown (Before Calibration)   | 70%     |
+| Tricep Pushdown (After Calibration)   | 100%     |
+| Lateral Raise (Before Calibration)| 63% |
+| Lateral Raise (After Calibration)| 97% |
+
+### % Accuracy of Rep Count after 30 Reps per Exercise
+| Exercise | % Accuracy of Rep Count |
+| -------- | ----------------------- |
+| Bicep Curl | 100% |
+| Tricep Pushdown | 100% |
+| Lateral Raise | 93% |
+
+Overall, after calibration, the % accuracy for all exercises was above 93%.
+
+## Future Improvements
+- Adding a battery so the watch can be used without being plugged in.
+   - Additional Materials: 3.7V LiPo battery, TP4056 battery charger, boost converter, and switch.
+- 3D printing the wrist enclosure to improve durability and water-proofing.
+- Add ankle-strap presets for lower-body rehab exercises like sit-to-stands and leg lifts.
+- Upgrade to a 6-axis IMU (accelerometer + gyroscope) to detect 3D arm tilt and bad posture.
+- Build a CCCARE kinesiologist view so a professional can review multiple patients saved sessions at once.
