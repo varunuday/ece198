@@ -1,8 +1,8 @@
-# Exerbox -- Wearable Exercise Rep Counter & Form Tracker
+# Exerbox: Wearable Exercise Rep Counter & Form Tracker
 By Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari
 
 ## Overview
-We built a wrist watch with a live display that shows the number of completed reps and feedback on the user's form. This data is linked to a [website](ece198.vercel.app) via Bluetooth Low Energy (BLE), which stores the user's workout history.
+We built a wrist watch with a live display that shows the number of completed reps and feedback on the user's form. This data is linked to a [website](https://ece198.vercel.app) via Bluetooth Low Energy (BLE), which stores the user's workout history.
 
 The project was designed for elderly patients enrolled in the University of Waterloo's Centre for Community, Clinical and Applied Research Excellence (CCCARE) who are working out under limited or no supervision. This device could allow CCCARE to provide more support to patients in large class sizes and expand their services to patients at home.
 
