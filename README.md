@@ -1,5 +1,38 @@
-# ECE 198 — exercise form check
+# Exerbox -- Wearable Exercise Rep Counter & Form Tracker
+By Varun Udayachandiran, Siddharth Khunti, Utkarsh Chandrabhushan Singh, Ayush Kothari
 
+## Overview
+We built a wrist watch with a live display that shows the number of completed reps and feedback on the user's form. This data is linked to a [website](ece198.vercel.app) via Bluetooth Low Energy (BLE), which stores the user's workout history.
+
+The project was designed for elderly patients enrolled in the University of Waterloo's Centre for Community, Clinical and Applied Research Excellence (CCCARE) who are working out under limited or no supervision. This device could allow CCCARE to provide more support to patients in large class sizes and expand their services to patients at home.
+
+Photos:
+Demo:
+
+## System Logic
+![System Logic](<images/System Logic.png>)
+
+## Hardware
+Parts List:
+- ESP32 microcontroller
+- MMA7361 3-axis accelerometer
+- SSD1306 OLED display
+- Jumper wires
+- Wrist strap, velcro, cardboard, tape (wrist band and box)
+
+![Circuit Diagram](<images/Circuit diagram.png>)
+
+## Firmware
+The firmware flashed to the ESP32 is in `hardware.ino`. The file `bicepCurl.ino` was the first draft of the firmware, which only worked for one exercise.
+
+- An Exponential Moving Average (EMA) filter smooths the accelerometer data
+- Each exercise uses data from only one axis. Pre-calibrated starting and ending values for each exercise allow readings to be converted into a %progress from 0-100.
+- A movement must start from below 30%, pass 70%, and return to below 30% to count as one rep.
+- Each movement has an ideal tempo range -- if it's below the range, the screen reads "TOO FAST" and if it's above the range, it reads "TOO SLOW"
+- Reps under 1 second long are ignored to filter out jolts or sudden movements.
+- Rep count and form feedback are displayed on the OLED, communicated via I2C protocol.
+  
+## Website
 The site is in `web/`.
 
 - `index.html` is the home page: what the site does, the six exercises, and your training totals once you sign in.
@@ -36,9 +69,9 @@ When the API isn't reachable (python server, KV not configured), the site silent
 
 ## Exercises
 
-Flash `hardware.ino` for the multi-exercise firmware. It adds an exercise characteristic (`...26ab`): pick an exercise on the page and the board follows, or press the BOOT button on the board and the page follows.
+Flash `hardware.ino` for the multi-exercise firmware. It adds an exercise characteristic (`...26ab`): pick an exercise on the page and the board follows.
 
-1. Bicep curl — calibrated (axis X, arm vertical down to vertical up)
+1. Bicep curl — calibrated (axis Z, arm vertical down to vertical up)
 2. Pec deck — calibrated (axis Y, arms wide open to chest squeeze)
 3. Overhead extension — calibrated (axis X, behind head to overhead)
 4. Lateral raise — calibrated (axis X, arm hanging to horizontal)
@@ -53,16 +86,3 @@ All six exercises have calculated thresholds and scoring out of the box. To reco
 The older `bluetoothAndRepCounter.ino` is curl-only. The site still works with it — the exercise picker locks to Bicep curl.
 
 The board advertises as `ESP32_BLE`.
-
-## Open the site
-
-Web Bluetooth only works on `localhost` or HTTPS, in Chrome or Edge.
-
-```powershell
-cd web
-python -m http.server 8080
-```
-
-Then open http://localhost:8080.
-
-**Preview** on the workout page plays sample reps for the selected exercise with no board attached, including the calibration flow for the two uncalibrated movements.
