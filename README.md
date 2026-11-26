@@ -7,8 +7,8 @@ We built a wrist watch with a live display that shows the number of completed re
 
 The project was designed for elderly patients enrolled in the University of Waterloo's Centre for Community, Clinical and Applied Research Excellence (CCCARE) who are working out under limited or no supervision. This device could allow CCCARE to provide more support to patients in large class sizes and expand their services to patients at home.
 
-![ExerBox](images/ExerBox.HEIC)
-![ExerBox with Website](<images/ExerBox with Website.HEIC>)
+![ExerBox](images/ExerBox.jpg)
+![ExerBox with Website](<images/ExerBox with Website.jpg>)
 [Youtube Demo Video](https://youtu.be/eJpfpgINAaE?si=ym_6DFrw67wo9XDW)
 
 ## System Logic
